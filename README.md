@@ -1,6 +1,8 @@
 # Predicting Credit Card Approvals (Classification - Supervised Learning)
 ### Overview
 ![Approval_image](https://github.com/user-attachments/assets/ea03e11e-cd58-4582-9168-5a2ef257189f)
+
+
 Commercial banks receive a lot of applications for credit cards. Many of them get rejected for many reasons, like high loan balances, low income levels, or too many inquiries on an individual's credit report, for example. Manually analyzing these applications is mundane, error-prone, and time-consuming (and time is money!). Luckily, this task can be automated with the power of machine learning and pretty much every commercial bank does so nowadays. In this workbook, you will build an automatic credit card approval predictor using machine learning techniques, just like real banks do.</p>
 In this project, I explore a machine learning classification problem focused on predicting credit card approval status based on applicant information. The dataset includes 690 samples with features such as demographic information, financial status, and employment history.</p>
 
@@ -10,7 +12,7 @@ In this project, I explore a machine learning classification problem focused on 
 
 |-----------------|----------------|---------------------------------|-----------|
 | 0               | gender         | Gender of the applicant         | Object    |
-| 1               | age            | Age of the applicant            | Object   |
+| 1               | age            | Age of the applicant            | Object    |
 | 2               | debt           | Total debt                      | Float64   |
 | 3               | married        | Marital status                  | Object    |
 | 4               | bankCustomer   | Bank customer status            | Object    |
