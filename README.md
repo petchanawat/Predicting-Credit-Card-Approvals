@@ -35,6 +35,6 @@ The main goal of this project is to build a machine learning model that can accu
 5. Evaluate and optimize model accuracy with metrics such as precision, recall, and F1-score.
 
 ### Methods
-## 1. Exploratory Data Analysis (EDA)
-# 1.1 Data Cleaning
-1.1 First, we reviewed the dataset to identify missing values and found that it did not contain null values but instead had entries marked with a '?' symbol, which likely indicate missing information. For simplicity, we removed any records with these placeholders.
+#### 1. Exploratory Data Analysis (EDA)
+##### 1.1 Data Cleaning
+- First, we reviewed the dataset to identify missing values and found that it did not contain null values but instead had entries marked with a '?' symbol, which likely indicate missing information. For simplicity, we removed any records with these placeholders.
