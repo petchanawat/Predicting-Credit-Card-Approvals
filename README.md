@@ -1,4 +1,4 @@
-# Predicting Credit Card Approvals (Classification - Supervised Learning)
+# [Predicting Credit Card Approvals (Classification - Supervised Learning)](https://www.datacamp.com/datalab/w/4cdd5468-4215-407f-b0de-c5b6dbab903e/edit)
 ### Overview
 ![Approval_image](https://github.com/user-attachments/assets/ea03e11e-cd58-4582-9168-5a2ef257189f)
 
