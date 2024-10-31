@@ -23,6 +23,7 @@ In this project, I explore a machine learning classification problem focused on 
 | 11              | citizen        | Citizenship status              | Object    |
 | 12              | income         | Annual income                   | Int64     |
 | 13              | approvalStatus | Approval status (target)        | Object    |
+Dataset from the UCI Machine Learning Repository.
 
 ### Project Objectives
 The main goal of this project is to build a machine learning model that can accurately predict the approvalStatus of credit card applications based on the provided features. I aimed to:
@@ -32,3 +33,8 @@ The main goal of this project is to build a machine learning model that can accu
 3. Apply feature scaling to enhance model performance.
 4. Test multiple classification algorithms to identify the best-performing model.
 5. Evaluate and optimize model accuracy with metrics such as precision, recall, and F1-score.
+
+### Methods
+## 1. Exploratory Data Analysis (EDA)
+# 1.1 Data Cleaning
+1.1 First, we reviewed the dataset to identify missing values and found that it did not contain null values but instead had entries marked with a '?' symbol, which likely indicate missing information. For simplicity, we removed any records with these placeholders.
