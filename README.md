@@ -37,4 +37,8 @@ The main goal of this project is to build a machine learning model that can accu
 ### Methods
 #### 1. Exploratory Data Analysis (EDA)
 ##### 1.1 Data Cleaning
-- First, we reviewed the dataset to identify missing values and found that it did not contain null values but instead had entries marked with a '?' symbol, which likely indicate missing information. For simplicity, we removed any records with these placeholders.
+- First, we reviewed the dataset to identify missing values and found that it did not contain null values but had entries marked with a '?' symbol, likely indicating missing information. For simplicity, we removed any records with these placeholders and changed the data type of the 'age' column from Object to Float64.
+```python
+cc_apps.drop(cc_apps[cc_apps.isin(["?"]).any(axis=1)].index, inplace=True)
+cc_apps["age"] = cc_apps["age"].astype("float")
+cc_apps.info()
