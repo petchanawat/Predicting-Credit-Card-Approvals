@@ -27,7 +27,8 @@ In this project, I explore a machine learning classification problem focused on 
 ### Project Objectives
 The main goal of this project is to build a machine learning model that can accurately predict the approvalStatus of credit card applications based on the provided features. I aimed to:
 
-1. Preprocess the data, handling missing values and encoding categorical features.
-2. Use feature scaling to improve model performance.
-3. Test several classification algorithms to determine the best-performing model.
-4. Evaluate and optimize model accuracy using metrics like precision, recall, and F1-score.
+1. Perform Exploratory Data Analysis (EDA) to understand the numerical and categorical features of the dataset.
+2. Preprocess the data by handling missing values and encoding categorical variables.
+3. Apply feature scaling to enhance model performance.
+4. Test multiple classification algorithms to identify the best-performing model.
+5. Evaluate and optimize model accuracy with metrics such as precision, recall, and F1-score.
