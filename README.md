@@ -230,7 +230,7 @@ print(class_report)
 Best accuracy for test set is 0.89
 
 ### Results
-- The Logistic Regression performed best, achieving an accuracy score of 89%, followed by KNN and Decision Tree.
+- The Logistic Regression performed best, achieving an accuracy score of **_89%_**, followed by KNN and Decision Tree.
 
 | Metric       | Class 0 | Class 1 | Macro Avg | Weighted Avg |
 |--------------|---------|---------|-----------|--------------|
@@ -242,4 +242,10 @@ Best accuracy for test set is 0.89
 
 - Key features contributing to credit approval prediction included years of employment, credit score, and income, suggesting these factors play a significant role in approval likelihood.
 
+### Conclusion
+This project successfully automated the credit card approval process using machine learning, providing insights into critical features affecting approvals.
 
+### Next Steps
+- **_Explore Additional Algorithms:_** Investigate and implement alternative machine learning algorithms to improve model accuracy and performance, such as ensemble methods or deep learning approaches.
+- **_Analyze Categorical Features:_** Conduct a deeper study of categorical features to evaluate their correlation with the target variable.
+- **_Deployment Considerations:_** Plan for the deployment of the model in a real-world environment, considering aspects such as scalability, monitoring, and maintenance.
