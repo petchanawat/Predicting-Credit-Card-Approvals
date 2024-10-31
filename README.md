@@ -114,7 +114,132 @@ cc_apps_encoded.head()
 ```
 ![image](https://github.com/user-attachments/assets/a2bfd332-eb45-4809-94e9-8ea2430fd3dc)
 
-- Define X is features and y is target that I want to predict and split to train and test to reduce overfitting in model
+- Define 𝑋 as the features and 𝑦 as the target variable that I want to predict. I will split the data into training and testing sets to reduce overfitting in the model.
+```python
+X = cc_apps_encoded.drop("approvalStatus", axis=1)
+y = cc_apps_encoded["approvalStatus"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, test_size=0.2, random_state=42)
+```
+- Prepare standardization methods to apply to the numerical features in order to maintain a consistent scale and achieve optimal performance. Additionally, I will compile a list of classification models to use for model selection.
+```python
+scaler = StandardScaler()
+minmaxscaler = MinMaxScaler()
+models = {"Logistics Regression": LogisticRegression(), "KNN": KNeighborsClassifier(), "Decision Tree": DecisionTreeClassifier()}
+result_scaler = []
+result_minmaxscaler = []
+```
+##### 2.2 Model Selection
+- We experimented with multiple classification algorithms—Logistic Regression, K-Nearest Neighbors (KNN), and Decision Tree Classifier—applying each to the different scalers.
+```python
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
+for model in models.values():
+    kf = KFold(n_splits=6, random_state=42, shuffle=True)
+    cv_results = cross_val_score(model, X_train_scaled, y_train, cv=kf)
+    result_scaler.append(cv_results)
+
+plt.boxplot(result_scaler, labels=models.keys())
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/1aa56b5d-f516-46ed-9a51-10794eadcf04)
+```python
+for name, model in models.items():
+    model.fit(X_train_scaled, y_train)
+    y_pred = model.predict(X_test_scaled)
+    test_score = model.score(X_test_scaled, y_test)
+    print("{} Test Set Accuracy: {}".format(name, test_score))
+    conf_matrix = confusion_matrix(y_test, y_pred)
+    print('Confusion Matrix:')
+    print(conf_matrix)
+```
+![image](https://github.com/user-attachments/assets/0b986e5f-9f7d-4aea-9afb-d4126353036d)
+```python
+X_train_min_max_scaled = minmaxscaler.fit_transform(X_train)
+X_test_min_max_scaled = minmaxscaler.transform(X_test)
+
+for model in models.values():
+    kf = KFold(n_splits=6, random_state=42, shuffle=True)
+    cv_results = cross_val_score(model, X_train_min_max_scaled, y_train, cv=kf)
+    result_minmaxscaler.append(cv_results)
+
+plt.boxplot(result_minmaxscaler, labels=models.keys())
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/368675b7-9c17-4cee-9ca9-02b1b52eecc3)
+```python
+for name, model in models.items():
+    model.fit(X_train_min_max_scaled, y_train)
+    y_pred = model.predict(X_test_min_max_scaled)
+    test_score = model.score(X_test_min_max_scaled, y_test)
+    print("{} Test Set Accuracy: {}".format(name, test_score))
+    conf_matrix = confusion_matrix(y_test, y_pred)
+    print('Confusion Matrix:')
+    print(conf_matrix)
+```
+![image](https://github.com/user-attachments/assets/38c1112c-f4dc-4c80-813b-de4d09864444)
+
+From the data above, the best scaler among two is StandardScaler and the most effective classification algorithm among the three is Logistic Regression. Next, we will use both StandardScaler and Logistic Regression in a pipeline to perform hyperparameter tuning to achieve optimal performance and identify the best parameters.
+
+- Hyperparameter tuning was performed using GridSearchCV to optimize model parameters.
+```python
+from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+
+param_grid = {
+    'logisticregression__C': [0.001, 0.01, 0.1, 1, 10, 100],
+    'logisticregression__tol': [0.01, 0.001, 0.0001],
+    'logisticregression__penalty': ['l1', 'l2'],
+    'logisticregression__solver': ['liblinear', 'saga'], 
+    'logisticregression__max_iter': [100, 200, 300, 400, 500]           
+}
+
+pipe = make_pipeline(StandardScaler(), LogisticRegression())
+grid_search = GridSearchCV(pipe, param_grid, cv=5)
+grid_search.fit(X_train, y_train)
+
+print("Best parameters found: ", grid_search.best_params_)
+```
+![image](https://github.com/user-attachments/assets/e1ea48de-2a2e-4aa6-bc72-2fe1ba2dce81)
+
+##### 2.3 Evaluation
+- Models were evaluated based on accuracy, precision, recall, and F1 score, with cross-validation to ensure robust results across different subsets of data.
+```python
+print("Best cross-validated score: {:.2f}".format(grid_search.best_score_))
+```
+![image](https://github.com/user-attachments/assets/3b932802-fb42-4f0e-8e43-a7f06fe49fc2)
+- Confusion matrices were used to visualize each model’s classification accuracy for approved vs. declined applications.
+```python
+y_pred = grid_search.predict(X_test)
+best_score = accuracy_score(y_test, y_pred)
+print('Test set accuracy: {:.2f}'.format(best_score))
+print(grid_search.score(X_test, y_test))
+conf_matrix = confusion_matrix(y_test, y_pred)
+print('Confusion Matrix:')
+print(conf_matrix)
+class_report = classification_report(y_test, y_pred)
+print('Classification Report')
+print(class_report)
+```
+![image](https://github.com/user-attachments/assets/9ef0ea5b-c8e4-41e5-9219-515ddfe373b7)
+
+Best accuracy for test set is 0.89
+
+### Results
+- The Logistic Regression performed best, achieving an accuracy score of 89%, followed by KNN and Decision Tree.
+
+| Metric       | Class 0 | Class 1 | Macro Avg | Weighted Avg |
+|--------------|---------|---------|-----------|--------------|
+| Precision    | 0.98    | 0.81    | 0.90      | 0.90         |
+| Recall       | 0.81    | 0.98    | 0.89      | 0.89         |
+| F1-Score     | 0.89    | 0.89    | 0.89      | 0.89         |
+| Support      | 72      | 60      | 132       | 132          |
+| Accuracy     | 0.89    |         |           |              |
+
+- Key features contributing to credit approval prediction included years of employment, credit score, and income, suggesting these factors play a significant role in approval likelihood.
 
 
