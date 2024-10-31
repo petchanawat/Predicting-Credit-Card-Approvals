@@ -42,5 +42,5 @@ The main goal of this project is to build a machine learning model that can accu
 cc_apps.drop(cc_apps[cc_apps.isin(["?"]).any(axis=1)].index, inplace=True)
 cc_apps["age"] = cc_apps["age"].astype("float")
 cc_apps.info()
-
+```
 - The dataset columns were renamed for clarity (e.g., "age," "debt," "education level") to facilitate interpretation and analysis.
