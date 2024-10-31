@@ -44,3 +44,77 @@ cc_apps["age"] = cc_apps["age"].astype("float")
 cc_apps.info()
 ```
 - The dataset columns were renamed for clarity (e.g., "age," "debt," "education level") to facilitate interpretation and analysis.
+![image](https://github.com/user-attachments/assets/1139f692-3c29-4b6a-b2ec-1f70a04d5a69)
+
+##### 1.2 Feature Analysis
+- The data in numerical (e.g. debt, years employed). Using describe() functions, we gained a high-level summary of the data distribution and feature types.
+```python
+numerical_columns.describe()
+```
+![image](https://github.com/user-attachments/assets/c8cab214-b4a2-4d92-b679-5060c3b4d2fb)
+I found that some numeric features have a high standard deviation; therefore, for the performance of the model, we need to standardize them.
+
+##### 1.3 Visualization
+- We used histograms to visualize the distribution of numerical features, which indicated skewness in age, debt, income, years employed, and credit score.
+```python
+numerical_columns.hist(figsize=(12,12),bins=20)
+```
+![image](https://github.com/user-attachments/assets/e79324ae-85f2-4833-b446-6803bcf6279c)
+![image](https://github.com/user-attachments/assets/a547e165-5f4f-4bfd-adb8-3ac755306900)
+![image](https://github.com/user-attachments/assets/d4b341bc-30ef-46d7-acd0-bb4002a77df5)
+
+- Box plots were employed to examine the relationship between approval status and each numerical variable, highlighting outliers and trends in features like debt and years employed.
+```python
+for column in numerical_columns.columns:
+    plt.figure(figsize=(8, 6))
+    sns.boxplot(x=cc_apps["approvalStatus"], y=cc_apps[column], showfliers=False, palette=['green', 'red'])
+    plt.title(f'Boxplot of {column} by Approval Status')
+    plt.xlabel("Approval Status")
+    plt.ylabel(column)
+    plt.show()
+```
+![image](https://github.com/user-attachments/assets/25e716c4-0d90-44b8-8c06-7b0138701a3b)
+![image](https://github.com/user-attachments/assets/45f1bc42-f5f7-41b0-a899-c23d058cc02d)
+![image](https://github.com/user-attachments/assets/bdb72f9a-2426-436d-ab38-b15e38a8d009)
+![image](https://github.com/user-attachments/assets/77113485-40c4-439b-86b8-d27b7343901a)
+![image](https://github.com/user-attachments/assets/0a9f179f-ffff-487f-91a6-47211b2fd754)
+<p>I found that years of employment, credit score, and income impact the changes in credit card approval, as shown in the boxplot above.</p>
+
+- Count plots were created for categorical variables to observe the class distribution across approval statuses, providing insight into the proportion of approved and declined applications for each category (e.g., gender, education level).
+```python
+for col in categorical_columns.columns:
+    print(f"\033[1m{col}\033[0m\n")
+    plt.figure(figsize=(8, 6))
+    sns.countplot(data=cc_apps, x=col, hue="approvalStatus", palette=['green', 'red'])
+    plt.xlabel(col)
+    plt.ylabel("Count")
+    plt.title(f'Count of {col} by Approval Status')
+    plt.legend(title="Approval Status")
+    plt.show()
+```
+![image](https://github.com/user-attachments/assets/0164cda9-8687-4820-8003-be92b8c3e3e5)
+
+In the categorical features, I gained insights into how they affect approval or decline rates per category. However, I would like to highlight the outstanding feature that clearly differentiates between categories regarding approval or decline: the history of previous defaults.
+
+- Lastly, we generated a correlation heatmap to understand the relationships among numerical features, which revealed mild correlations between features like age and years employed.
+```python
+import seaborn as sns
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.heatmap(cc_apps.corr(), ax=ax, annot=True, cmap="crest")
+plt.show()
+```
+![image](https://github.com/user-attachments/assets/4bfba638-6c87-4baa-8949-bbfdaac4545b)
+
+#### 2. Modeling
+##### 2.1 Data Preprocessing
+- Encoding techniques were used to convert categorical features to numerical representations, necessary for model training.
+```python
+cc_apps_encoded = pd.get_dummies(cc_apps, drop_first=True)
+cc_apps_encoded.head()
+```
+![image](https://github.com/user-attachments/assets/a2bfd332-eb45-4809-94e9-8ea2430fd3dc)
+
+- Define X is features and y is target that I want to predict and split to train and test to reduce overfitting in model
+
+
+
