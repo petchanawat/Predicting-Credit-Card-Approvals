@@ -5,19 +5,19 @@ In this project, I explore a machine learning classification problem focused on 
 
 ### Dataset Description
 
-| Column         | Description                     | Data Type |
-|----------------|---------------------------------|-----------|
-| gender         | Gender of the applicant         | Object    |
-| age            | Age of the applicant            | Float64   |
-| debt           | Total debt                      | Float64   |
-| married        | Marital status                  | Object    |
-| bankCustomer   | Bank customer status            | Object    |
-| educationLevel | Education level                 | Object    |
-| ethnicity      | Ethnicity                       | Object    |
-| yearsEmployed  | Years of employment             | Float64   |
-| priorDefault   | History of previous defaults    | Object    |
-| employed       | Employment status               | Object    |
-| creditScore    | Credit score                    | Int64     |
-| citizen        | Citizenship status              | Object    |
-| income         | Annual income                   | Int64     |
-| approvalStatus | Approval status (target)        | Int64     |
+| Old Column Name | Column Name    | Description                     | Data Type |
+|-----------------|----------------|---------------------------------|-----------|
+| 0               | gender         | Gender of the applicant         | Object    |
+| 1               | age            | Age of the applicant            | Object   |
+| 2               | debt           | Total debt                      | Float64   |
+| 3               | married        | Marital status                  | Object    |
+| 4               | bankCustomer   | Bank customer status            | Object    |
+| 5               | educationLevel | Education level                 | Object    |
+| 6               | ethnicity      | Ethnicity                       | Object    |
+| 7               | yearsEmployed  | Years of employment             | Float64   |
+| 8               | priorDefault   | History of previous defaults    | Object    |
+| 9               | employed       | Employment status               | Object    |
+| 10              | creditScore    | Credit score                    | Int64     |
+| 11              | citizen        | Citizenship status              | Object    |
+| 12              | income         | Annual income                   | Int64     |
+| 13              | approvalStatus | Approval status (target)        | Object    |
